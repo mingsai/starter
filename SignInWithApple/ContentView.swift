@@ -68,7 +68,7 @@ struct ContentView: View {
     let controller = ASAuthorizationController(authorizationRequests: requests)
     controller.delegate = appleSignInDelegates
 
-    controller.presentationContextProvider = appleSignInDelegates as? ASAuthorizationControllerPresentationContextProviding
+    controller.presentationContextProvider = appleSignInDelegates
 
     controller.performRequests()
   }
@@ -99,9 +99,10 @@ struct ContentView: View {
     let request = ASAuthorizationAppleIDProvider().createRequest()
     request.requestedScopes = [.fullName, .email]
     let controller = ASAuthorizationController(authorizationRequests: [request])
-    appleSignInDelegates = SignInWithAppleDelegates() { success in if success { } else { }
+    appleSignInDelegates = SignInWithAppleDelegates(window: window) { success in
+      if success { } else { }
     }
-//    let controller = ASAuthorizationController(authorizationRequests: [request])
+//v1    let controller = ASAuthorizationController(authorizationRequests: [request])
     controller.delegate = appleSignInDelegates
 
 
